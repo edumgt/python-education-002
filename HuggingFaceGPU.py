@@ -9,7 +9,7 @@ pipe = StableDiffusionPipeline.from_pretrained(
 ).to("cuda")
 
 # 프롬프트로 이미지 생성
-prompt = "a beautiful futuristic city at sunset, ultra realistic, 4K"
+prompt = "Many Fruit, Natural Sun Light, 4K"
 image = pipe(prompt, guidance_scale=7.5).images[0]
 
 # 저장
