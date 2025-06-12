@@ -1,11 +1,20 @@
 import cv2
 import numpy as np
+import os
 
-# 512x512 파란 배경 이미지 생성
-img = np.zeros((512, 512, 3), dtype=np.uint8)
-img[:] = (255, 0, 0)  # BGR → 파란색
+# 애니메이션 생성
+output_path = "circle_animation.mp4"
+width, height, fps = 512, 512, 30
+writer = cv2.VideoWriter(output_path, cv2.VideoWriter_fourcc(*'mp4v'), fps, (width, height))
 
-# 흰 원 그리기 (중심, 반지름, 색상, 두께)
-cv2.circle(img, center=(256, 256), radius=100, color=(255, 255, 255), thickness=-1)
+for r in list(np.linspace(20, 100, 30)) + list(np.linspace(100, 20, 30)):
+    img = np.zeros((height, width, 3), dtype=np.uint8)
+    img[:] = (255, 0, 0)
+    cv2.circle(img, (width//2, height//2), int(r), (255, 255, 255), -1)
+    writer.write(img)
 
-cv2.imwrite("circle_on_blue.png", img)
+writer.release()
+print("🎞️ 동영상 저장 완료:", output_path)
+
+# 자동 재생 (Windows 전용)
+os.startfile(output_path)
